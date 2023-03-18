@@ -1,58 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        body{
-            background-color: deepskyblue;
-            
-        }
-        .cuerpo{
-
-            
-            width: 600px;
-            height: 600px;
-            background:azure;
-            position: absolute;
-            top: 20%;
-            left: 30%;
-            margin: -25px 0 0 -25px; 
-            text-align: justify;
-            font-family: sans-serif;
-            border: black 2px solid;
-        }
-        .contenido{
-            margin-top: 40px;
-            margin-left:40px;
-            margin-right: 40px;
-        }
-        h1{
-            text-align: center;
-        }
-        img{
-            width: 400px;
-            height: 400px;
-        }
-    </style>
-
+    <title>Mensaje</title>
 </head>
 <body>
-    <div class="cuerpo">
-        <h1>Presentación</h1>
-        <div class="contenido">
-            <p>
-                Hola mi nombre es German Luis Cruz Martinez, actualmente estoy cursando el 6to semestre
-                de la carrera de informatica en la Universidad del Mar, elegí esta carrera ya que me llamó mucho 
-                la atencion la programacion y la electronica.
-            </p>   
-            <p>Actualmente tengo 24 años</p>
-            <img src="imagen.jpeg" alt="">         
+        <input type="text">
+        <p>Escriba su nombre :</p>
+        <textarea name="Texto" id="" cols="30" rows="10"></textarea>
+        <button >Enviar</button>
+        <div id="Mensajes">
         </div>
-       
-    </div>
-
+        <script>
+            let mensajes=null;
+            const chambear=()=>{
+                const m=document.getElementById('Mensajes');
+                for(let i=0;i<mensajes.length;i++){
+                    m.innerHTML+=mensajes[i].Usuario+':'+mensajes[i].texto;
+                    m.innerHTML+='<br>';
+                }
+            }
+            fetch('/mensajes.json').then(Response=>Response.json())
+            .then((data)=>{
+                 mensajes=data;
+                 chambear(); })
+        </script>
 </body>
 </html>
