@@ -1,31 +1,13 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-MX">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mensaje</title>
+    <title>Document</title>
 </head>
 <body>
-        <input type="text">
-        <p>Escriba su nombre :</p>
-        <textarea name="Texto" id="" cols="30" rows="10"></textarea>
-        <button >Enviar</button>
-        <div id="Mensajes">
-        </div>
-        <script>
-            let mensajes=null;
-            const chambear=()=>{
-                const m=document.getElementById('Mensajes');
-                for(let i=0;i<mensajes.length;i++){
-                    m.innerHTML+=mensajes[i].Usuario+':'+mensajes[i].texto;
-                    m.innerHTML+='<br>';
-                }
-            }
-            fetch('/mensajes.json').then(Response=>Response.json())
-            .then((data)=>{
-                 mensajes=data;
-                 chambear(); })
-        </script>
+    <h1>APP node</h1>
+    <p>
+        Hola, la app de Node funciona.❄
+    </p>
 </body>
 </html>

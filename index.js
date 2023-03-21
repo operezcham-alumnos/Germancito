@@ -1,21 +1,18 @@
-const http = require('http');
+//Modulos nesesarios
+const http = requiere('http')
+const fs =requiere('fs')
 
-const PORT = 3000;
-const fs = require('fs');
-const mensajes = [
-    { "Usuario": "Oscar", "Fecha": "2023-1-1", "texto": "Hola" },
-    {"Usuario":"Juan","Fecha":"20203-1-02","texto":"Hola"},
-    
-]
+//constante del puerto
+const PORT = 3000
 
-const server = http.createServer((req, res) => {
-    if (req.method === 'GET' && req.url === 'mensajes.json') {
-        res.statusCode = 201;
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(mensajes));
-    }
-});
+//creacion del servidor
+const servidor = http.createServer(responder)
+servidor.listen(PORT)
 
-server.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}/`);
-});
+
+function responder(solicitud, respuesta){
+    respuesta.writeHead(200,{'Content-Type':'text/html'})
+    const texto=fs.readFileSync('index.html','utf8')
+    respuesta.write(texto)
+    respuesta.end()
+}
