@@ -2,7 +2,7 @@
 
     "dependencies":{},
     "scripts": {
-        "start": "Node index.js"
+        "start": "node index.js"
     }
 
 }
