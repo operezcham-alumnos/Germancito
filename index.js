@@ -1,6 +1,6 @@
 //Modulos nesesarios
-const http = requiere('http')
-const fs =requiere('fs')
+const http = require('http')
+const fs =require('fs')
 
 //constante del puerto
 const PORT = 3000
