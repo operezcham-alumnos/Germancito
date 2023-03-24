@@ -1,13 +1,106 @@
 <!DOCTYPE html>
-<html lang="es-MX">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    <h1>APP node</h1>
-    <p>
-        Hola, la app de Node funciona.❄
-    </p>
+    <input type="text">
+    <p>escriba su nombre</p>
+    <textarea name="Texto" id="" cols="30" rows="10"></textarea>
+    <button>Enviar</button>
+    <div id="mensajes">
+
+    </div>
+    <form id="crear">
+         <h3>Agregar mensaje</h3>   
+         <label for="usuario">Mensajes</label>
+         <textarea id="agregar" name="Texto" id="" ></textarea>
+         <button>Nuevo</button>
+    </form>    
+    <form id="borrar">
+        <h3>Borrar mensaje</h3>   
+        <label for="usuarioborrar">Mensajes</label>
+        <textarea id="borrar" name="Texto" id="" ></textarea>
+        <button>Borrar</button>
+   </form>
+
+
+
+    <script>
+
+         const mensajeElement = document.getElementById("mensajes");
+         const forCrear = document.getElementById("crear");
+         const froBorar = document.getElementById("borrar");
+         const fromActualizar = document.getElementById("Actualizar");  
+
+        const mensajesContainer = document.querySelector('#mensajes-container');
+        //Funcion para obtener mensajes
+
+        function obtener(){
+            fetch('/listademensajes').then(response=>response.json()).then(data=>{
+                imprimirMensajes(data);
+            })
+            .catch(error=>{
+                console.error("Error al cargar los mensajes: ", error);
+            });
+        }
+
+        //Funcion para imprimir mensaje
+
+        function imprimirMensajes(mensajes) {
+            mensajeElement.innerHTML = "";
+            mensajes.forEach((mensaje) => {
+                mensajeElement.classList.add("mensaje");
+                mensajeElement.innerHTML += `
+                        <span class="mensaje-usuario">${mensaje.id}</span>
+                        <span class="mensaje-usuario">${mensaje.usuario}</span>
+                        <span class="mensaje-fecha">${mensaje.fecha}</span>
+                        <span class="mensaje-texto">${mensaje.texto} <br></span>`;
+            });
+        }
+        //Funcion para actualizar el mensaje
+        function actualizarmensaje(event){
+            evet.preventDefault();
+            const  usuarioact=document.getElementById("usuario").value;
+            const  fechaact=document.getElementById("fecha").value;
+            const  textoact=document.getElementById("texto").value;
+            fetch('/actualizarmen',{
+                method:'POST',
+                headers:{
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(usuarioact),
+            })
+            .then(response=>response.json())
+            .then(data=>{
+                obtener();
+                fromActualizar.reset();
+            })
+            
+        }
+
+        //Funcion para borrar el mensaje
+        function borrarMensaje(event){
+            event.preventDefault(event);
+            const usuarios=document.getElementById('usuarioborrar').value;
+            fetch('/usuarios/${usuario}',{
+                method:'DELETE'
+            })
+            .then(()=>{
+                obtener();
+                froBorar.reset()
+            });
+        }
+        obtener();
+        forCrear.addEventListener('submit',actualizarmensaje);
+        froBorar.addEventListener('submit',borrarMensaje);
+    </script>
+
 </body>
+
 </html>

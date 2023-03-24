@@ -1,18 +1,46 @@
-//Modulos nesesarios
-const http = require('http')
-const fs =require('fs')
+const http = require("http");
+const PORT = 3000;
+const fs = require("fs");
+const mensajes = [
+  {
+    id:1,
+    usuario: "servidor",
+    texto: "saludos, envie su mensaje",
+    fecha: "2021-08-4",
+  },
+];
 
-//constante del puerto
-const PORT = 3000
+const server = http.createServer((rep,res)=>{
+  if(req.metod==='GET'&&req.url=='/listademensajes'){
+    res.statusCode=200;
+    res.setHeader('Content-Type', 'text/html');
+    res.end(JSON.stringify(mensajes));
+  }else if (req.method === "GET" && req.url === "/") {
 
-//creacion del servidor
-const servidor = http.createServer(responder)
-servidor.listen(PORT)
+    const paginaHtmlPath = "./index.html";
+    const paginaHtml = fs.readFileSync(paginaHtmlPath, "utf8");
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "text/html");
+
+    res.end(paginaHtml);
+  }else if (req.method === "POST" && req.url === "/actualizarmen") {
+
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk.toString();
+
+    });
+  }
+
+});
 
 
-function responder(solicitud, respuesta){
-    respuesta.writeHead(200,{'Content-Type':'text/html'})
-    const texto=fs.readFileSync('index.html','utf8')
-    respuesta.write(texto)
-    respuesta.end()
-}
+
+
+
+
+const server = http.createServer((req, res) => {
+});
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+});
